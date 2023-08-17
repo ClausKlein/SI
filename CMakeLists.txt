@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.23...3.27)
 
 project(
   "SI"
@@ -9,7 +9,7 @@ project(
   LANGUAGES CXX)
 
 include(GNUInstallDirs)
-include(CTest)
+#XXX include(CTest)
 
 find_package(Catch2)
 
@@ -40,9 +40,12 @@ target_include_directories(
   SI INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-target_compile_features(SI INTERFACE cxx_std_17)
+target_compile_features(SI INTERFACE cxx_std_20)
 
-if(BUILD_TESTING AND SI_BUILD_TESTING)
+include(cmake/WarningsAsErrors.cmake)
+
+if(SI_BUILD_TESTING)
+  enable_testing()
   include(Catch)
   add_subdirectory(test)
 endif()

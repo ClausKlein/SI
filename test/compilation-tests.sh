@@ -32,7 +32,7 @@ oneTimeSetUp(){
     conan install . --output-folder=${BUILD_DIR} --build=missing --settings=build_type=Release
     
     # install SI
-    cmake ${ROOT_DIR} -B${BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DBUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release --toolchain=${BUILD_DIR}/conan_toolchain.cmake -G Ninja > /dev/null
+    cmake ${ROOT_DIR} -B${BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DSI_INSTALL_LIBRARY=on -DSI_BUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release --toolchain=${BUILD_DIR}/conan_toolchain.cmake -G Ninja > /dev/null
     cmake --build ${BUILD_DIR} --config Release --target install > /dev/null
     
     if [ -d ${BUILD_DIR} ]; then

@@ -29,7 +29,7 @@ tearDown() {
 
 testPureCmakeInstallation() {
     # install SI
-    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DBUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release
+    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DSI_BUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release
     cmake --build ${SI_BUILD_DIR} --config Release --target install
     assertEquals "Installation build successful" 0 $?
     cmake ${ROOT_DIR}/test/installation-tests -B${BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH}
@@ -40,7 +40,7 @@ testPureCmakeInstallation() {
 
 testPureCmakeInstallationWithInstallOptionTurnedOff() {
     # install SI
-    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DBUILD_TESTING=off -DSI_INSTALL_LIBRARY=OFF -DCMAKE_BUILD_TYPE=Release
+    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_PATH} -DSI_BUILD_TESTING=off -DSI_INSTALL_LIBRARY=off -DCMAKE_BUILD_TYPE=Release
     cmake --build ${SI_BUILD_DIR} --config Release --target install
     assertNotEquals "Installation build successful" 0 $?
     
@@ -52,7 +52,7 @@ testPureCmakeInstallationWithInstallOptionTurnedOff() {
 
 testCpackInstallation() {
     # install SI
-    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCPACK_PACKAGE_FILE_NAME=install-SI -DBUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release
+    cmake ${ROOT_DIR} -B${SI_BUILD_DIR} -DCPACK_PACKAGE_FILE_NAME=install-SI -DSI_BUILD_TESTING=off -DCMAKE_BUILD_TYPE=Release
     cmake --build ${SI_BUILD_DIR} --config Release --target package
     assertEquals "Installation build successful" 0 $?
     if [ "${OS_NAME}" = "Linux" ] || [ "${OS_NAME}" = "Darwin" ]; then
